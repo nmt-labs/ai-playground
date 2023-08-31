@@ -23,8 +23,10 @@ y_classe = base.iloc[:, 11].values
 
 label_encoder = LabelEncoder()
 
-for i in range(10):  
+# column 8 (Tipo) will be treated differently
+for i in range(8):  
   x_prev[:,i] = label_encoder.fit_transform(x_prev[:,i])
+x_prev[:,9] = label_encoder.fit_transform(x_prev[:,9])
 
 onehotencoder_restaurante = ColumnTransformer(transformers=[('OneHot', OneHotEncoder(), [8])], remainder='passthrough')
 x_prev = onehotencoder_restaurante.fit_transform(x_prev)
