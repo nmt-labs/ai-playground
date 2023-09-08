@@ -34,7 +34,7 @@ x_prev[:,9] = label_encoder.fit_transform(x_prev[:,9])
 onehotencoder_restaurante = ColumnTransformer(transformers=[('OneHot', OneHotEncoder(), [4,5,8,9])], remainder='passthrough')
 x_prev = onehotencoder_restaurante.fit_transform(x_prev)
 
-print(x_prev)
+# print(x_prev)
 
 # separe samples for training and testing
 x_treino, x_teste, y_treino, y_teste = train_test_split(x_prev, y_classe, test_size = 0.20, random_state = 23)
