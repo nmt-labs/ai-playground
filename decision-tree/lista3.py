@@ -1,7 +1,7 @@
 import pandas as pd
 from chefboost import Chefboost as chef
 
-df = pd.read_csv("../sample-data/risco.csv", sep=',')
+df = pd.read_csv("sample-data/risco.csv", sep=',')
 config = {'algorithm': 'ID3'}
 model = chef.fit(df, config = config, target_label = 'Decision')
 
