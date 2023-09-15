@@ -6,6 +6,10 @@ import plotly.express as px
 from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 from yellowbrick.classifier import ConfusionMatrix
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.compose import ColumnTransformer
 import pickle
 
 PATH = '../sample-data/weather_nominal.csv'
@@ -20,7 +24,22 @@ with open(PATH_PKL, 'wb') as file:
 
 with open(PATH_PKL, 'rb') as f:
   f.seek(0)
-  x_treino, x_teste, y_treino, y_teste = pickle.load(f)
+  base = pickle.load(f)
+  print(base)
+x_prev = base.iloc[:, 0:4].values
+x_prev_label = base.iloc[:, 0:4]
+y_classe = base.iloc[:, 4].values
+
+label_encoder = LabelEncoder()
+
+x_prev[:,0] = label_encoder.fit_transform(x_prev[:,0])
+x_prev[:,1] = label_encoder.fit_transform(x_prev[:,1])
+x_prev[:,2] = label_encoder.fit_transform(x_prev[:,2])
+x_prev[:,3] = label_encoder.fit_transform(x_prev[:,3])
+
+print(x_prev)
+
+x_treino, x_teste, y_treino, y_teste = train_test_split(x_prev, y_classe, test_size = 0.20, random_state = 23)
   
 modelo = GaussianNB()
 modelo.fit(x_treino, y_treino)
